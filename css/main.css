@@ -1,10 +1,17 @@
-#playarea{
-   
-    height: 100%;
-    width: 100%;
-    background-color:thistle;
-    text-align: center;
+body {
     margin: 0;
     padding: 0;
-    
+}
+
+#playarea {
+
+    height: 750px;
+    background-color: thistle;
+    text-align: center;
+    position: relative
+}
+
+#player {
+    background-color: coral;
+    position: absolute;
 }
