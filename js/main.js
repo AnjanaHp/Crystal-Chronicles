@@ -24,17 +24,17 @@ class Player {
     moveLeft() {
         this.positionX -= 20;
         this.updateUI();
-        console.log("position changed to left")
     }
 }
 
-// create class for crystals
-class Crystal {
-    constructor() {
+// create class for objects
+class GameObject {
+    constructor(type) {
         this.positionX = Math.floor(Math.random() * (1500 - 0) + 0);
-        this.positionY = 730;
+        this.positionY = 600;
         this.width = 30;
         this.height = 25;
+        this.type = type;
 
         this.createDom();
     }
@@ -42,71 +42,91 @@ class Crystal {
     createDom() {
 
         //Create crystal Element
-        this.crystalElm = document.createElement("div");
+        this.gameElm = document.createElement("div");
 
         // add content
-        this.crystalElm.className = "crystal";
-        this.crystalElm.style.left = this.positionX + "px";
-        this.crystalElm.style.bottom = this.positionY + "px";
-        this.crystalElm.style.width = this.width + "px";
-        this.crystalElm.style.height = this.height + "px";
+        this.gameElm.className = this.type;
+        this.gameElm.style.left = this.positionX + "px";
+        this.gameElm.style.bottom = this.positionY + "px";
+        this.gameElm.style.width = this.width + "px";
+        this.gameElm.style.height = this.height + "px";
+        this.gameElm.style.backgroundColor = this.type === "crystal" ? "gold" : "darkred"
+        // dynamic image changing based on type (make sure to name images accordingly)
+        // this.gameElm.style.backgroundImage = `url(../image/${this.type}.png)` WHEN INCLUDE MORE TYPES
+
 
         //append to dom
         const parentElm = document.getElementById("playarea");
-        parentElm.appendChild(this.crystalElm);
+        parentElm.appendChild(this.gameElm);
     }
 
     moveDown() {
         this.positionY--;
-        console.log("position changed");
-        this.crystalElm.style.bottom = this.positionY + "px";
+        this.gameElm.style.bottom = this.positionY + "px";
+        if (this.positionY <= 0) {
+            this.removeGameObj();
+        }
     }
-    removeCrystal(){
-        this.crystalElm.remove();
+    removeGameObj() {
+        this.gameElm.remove();
     }
 }
-
-
-
 
 
 const collector = new Player();
 const crystalsArr = [];
-let point =0;
+const stoneArr = [];
+let point = 0;
 
-function updatePoint(){
-    document.getElementById("point").innerText= "Score:" +point;
+
+// to display score
+function updatePoint() {
+    document.getElementById("point").innerText = "Score:" + point;
 }
 
-setInterval(() => {
-    const crystalIs = new Crystal();
-    crystalsArr.push(crystalIs);
-    console.log("moving down")
-}, 3000);
+// to create crystals and stones
+function createObject() {
+    const random = Math.round(Math.random() * 2)
+    if (random % 2 === 0) {
+        const crystal = new GameObject("crystal")
+        crystalsArr.push(crystal)
+    } else {
+        const stone = new GameObject("stone");
+        stoneArr.push(stone);
+    }
+}
 
-setInterval(() => {
-    crystalsArr.forEach((gemObj,index,arr) => {
-        
+
+setInterval(createObject, 2000);
+
+
+
+function handleCollision(arr, objType, pointchange) {
+    arr.forEach((gemObj, index) => {
+
         gemObj.moveDown();
-  //assuming gems are in rectangle shape
         if (
             collector.positionX < gemObj.positionX + gemObj.width &&
             collector.positionX + collector.width > gemObj.positionX &&
             collector.positionY < gemObj.positionY + gemObj.height &&
             collector.positionY + collector.height > gemObj.positionY
-        ) { 
-            console.log(point);
-            point++;
-            console.log(point);
+        ) {
+            point += pointchange;
             updatePoint();
-            console.log(point);
-            console.log("Points gained is" + point);
-            gemObj.removeCrystal();
-            crystalsArr.splice(index,1);
+            gemObj.removeGameObj();
+            arr.splice(index, 1);
         }
-
     });
-},10)
+}
+
+
+setInterval(() => {
+    handleCollision(crystalsArr, "crystal", 1);
+    handleCollision(stoneArr, "stone", -1);
+
+}, 10);
+
+
 
 
 document.addEventListener("keydown", (event) => {
