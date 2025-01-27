@@ -3,8 +3,8 @@ class Player {
     constructor() {
         this.positionX = 100;
         this.positionY = 10;
-        this.width = 50;
-        this.height = 50;
+        this.width = 30;
+        this.height = 25;
 
         this.collectorElm = document.getElementById("player");
         this.updateUI();
@@ -31,10 +31,10 @@ class Player {
 // create class for crystals
 class Crystal {
     constructor() {
-        this.positionX = 500;
-        this.positionY = 500;
-        this.width = 20;
-        this.height = 20;
+        this.positionX = Math.floor(Math.random() * (1500 - 0) + 0);
+        this.positionY = 730;
+        this.width = 30;
+        this.height = 25;
 
         this.createDom();
     }
@@ -61,25 +61,52 @@ class Crystal {
         console.log("position changed");
         this.crystalElm.style.bottom = this.positionY + "px";
     }
+    removeCrystal(){
+        this.crystalElm.remove();
+    }
 }
+
 
 
 
 
 const collector = new Player();
 const crystalsArr = [];
+let point =0;
+
+function updatePoint(){
+    document.getElementById("point").innerText= "Score:" +point;
+}
 
 setInterval(() => {
     const crystalIs = new Crystal();
     crystalsArr.push(crystalIs);
     console.log("moving down")
-}, 5000);
+}, 3000);
 
 setInterval(() => {
     crystalsArr.forEach((gemObj,index,arr) => {
+        
         gemObj.moveDown();
+  //assuming gems are in rectangle shape
+        if (
+            collector.positionX < gemObj.positionX + gemObj.width &&
+            collector.positionX + collector.width > gemObj.positionX &&
+            collector.positionY < gemObj.positionY + gemObj.height &&
+            collector.positionY + collector.height > gemObj.positionY
+        ) { 
+            console.log(point);
+            point++;
+            console.log(point);
+            updatePoint();
+            console.log(point);
+            console.log("Points gained is" + point);
+            gemObj.removeCrystal();
+            crystalsArr.splice(index,1);
+        }
+
     });
-},50)
+},10)
 
 
 document.addEventListener("keydown", (event) => {
