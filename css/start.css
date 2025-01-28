@@ -1,15 +1,28 @@
 #start{
-       background-color: palevioletred;
+      
+      position: relative;
+      width: 1300px;
+    height: 700px;
+    background-image: url(../images/start_img.png);
+    object-fit:contain;
+    text-align: center;
+    position: relative;
+    border: 2px, solid black;
+    border-radius: 10px;
+    overflow: hidden;
   }
   
   h1{
     text-align:center;
     font-weight: bold;
     font-size: 80px;
-    text-shadow: 2px 2px white;
+    color: white;
+    text-shadow: 2px 2px black;
   }
 
-
+a{
+  color:aliceblue;
+}
   #content{
     text-align:center;
     font-size: 30px;
