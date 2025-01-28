@@ -61,7 +61,7 @@ class GameObject {
     }
 
     moveDown() {
-        this.positionY--;
+        this.positionY -= 2;
         this.gameElm.style.bottom = this.positionY + "px";
         if (this.positionY <= 0) {
             this.removeGameObj();
@@ -79,24 +79,30 @@ const stoneArr = [];
 
 
 // to create crystals and stones
+let ObjectCreated = false;
+
 function createObject() {
-    const random = Math.round(Math.random() * 2)
+    const random = Math.round(Math.random() * 2);
+    let newObj
     if (random % 2 === 0) {
-        const crystal = new GameObject("crystal")
-        crystalsArr.push(crystal)
+        newObj = new GameObject("crystal")
+        crystalsArr.push(newObj)
     } else {
-        const stone = new GameObject("stone");
-        stoneArr.push(stone);
+        newObj = new GameObject("stone");
+        stoneArr.push(newObj);
+    }
+    if (!ObjectCreated) {
+        ObjectCreated = true;
+        startTimer();
     }
 }
 
 
 setInterval(createObject, 1000);
 
-
-let point =0;
- //to display score
- function updatePoint() {
+//to display score
+let point = 0;
+function updatePoint() {
     document.getElementById("point").innerText = "Score:" + point;
 }
 
@@ -116,7 +122,8 @@ function handleCollision(arr, objType, pointchange) {
             updatePoint();
             gemObj.removeGameObj();
             arr.splice(index, 1);
-        }else if (point < 0) {
+            return;
+        } else if (point < 0) {
             console.log("game over...");
             location.href = "gameover.html";
         }
@@ -139,9 +146,43 @@ document.addEventListener("keydown", (event) => {
     } else if (event.code === 'ArrowRight') {
         collector.moveRight();
     }
-
+    console.log("player moved")
 });
 
 
+
+let timer;
+let timeRemaining = 60;
+
+
+function updateTimeDisplay() {
+    console.log("updating timer")
+    //const time = Math.floor(timeRemaining / 60).toString().padStart(2, "0");
+    document.getElementById("time").innerText = "Time:" + timeRemaining + 's';
+
+}
+
+function startTimer() {
+    console.log("time started")
+    clearInterval(timer);
+    updateTimeDisplay();
+    timer = setInterval(function () {
+        timeRemaining--;
+        updateTimeDisplay();
+        if (timeRemaining <= 0) {
+            clearInterval(timer);
+            endGame();
+        }
+    }, 1000);
+}
+
+function endGame() {
+    console.log("game over...");
+    location.href = "gameover.html";
+
+}
+
+
+startTimer();
 
 
