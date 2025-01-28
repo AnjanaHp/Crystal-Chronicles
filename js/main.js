@@ -1,10 +1,12 @@
 
+const playAreaWidth = document.getElementById("playarea").offsetWidth;
+
 class Player {
     constructor() {
         this.positionX = 100;
         this.positionY = 10;
-        this.width = 30;
-        this.height = 25;
+        this.width = 120;
+        this.height = 55;
 
         this.collectorElm = document.getElementById("player");
         this.updateUI();
@@ -15,14 +17,20 @@ class Player {
         this.collectorElm.style.height = this.height + "px";
         this.collectorElm.style.left = this.positionX + "px";
         this.collectorElm.style.bottom = this.positionY + "px";
+        //this.collectorElm.style.backgroundImage = url('../images/player.png');
+        
     }
-    moveRight() {
-        this.positionX += 20;
-        this.updateUI();
 
+    moveRight() {
+        if (this.positionX < playAreaWidth) {
+            this.positionX += 20;
+        }
+        this.updateUI();
     }
     moveLeft() {
-        this.positionX -= 20;
+        if (this.positionX > 0) {
+            this.positionX -= 20;
+        }
         this.updateUI();
     }
 }
@@ -32,8 +40,8 @@ class GameObject {
     constructor(type) {
         this.positionX = Math.floor(Math.random() * (1500 - 0) + 0);
         this.positionY = 600;
-        this.width = 30;
-        this.height = 25;
+        this.width = 80;
+        this.height = 60;
         this.type = type;
 
         this.createDom();
@@ -50,9 +58,10 @@ class GameObject {
         this.gameElm.style.bottom = this.positionY + "px";
         this.gameElm.style.width = this.width + "px";
         this.gameElm.style.height = this.height + "px";
-        this.gameElm.style.backgroundColor = this.type === "crystal" ? "gold" : "darkred"
+        //this.gameElm.style.backgroundColor = this.type === "crystal" ? "gold" : "darkred";
+        
         // dynamic image changing based on type (make sure to name images accordingly)
-        // this.gameElm.style.backgroundImage = `url(../image/${this.type}.png)` WHEN INCLUDE MORE TYPES
+         this.gameElm.style.backgroundImage = `url(../images/${this.type}.png)` ;    //WHEN INCLUDE MORE TYPES
 
 
         //append to dom
