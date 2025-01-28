@@ -36,17 +36,13 @@ body {
     color: lavenderblush;
 }
 
-.crystal {
+.crystal, .stone, .Yellowstone, .Greenstone {
     
     position: absolute;
-    background-image: url(../images/crystal.png);
+    
 }
 
-.stone{
-   
- position:absolute;
-  background-image: url(../images/stone.png);
-}
+
 
 #gameover{
     text-align: center;

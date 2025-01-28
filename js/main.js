@@ -3,22 +3,24 @@ const playAreaWidth = document.getElementById("playarea").offsetWidth;
 
 class Player {
     constructor() {
-        this.positionX = 100;
-        this.positionY = 10;
         this.width = 120;
         this.height = 55;
+        this.positionX = 100;
+        this.positionY = 10;
+
 
         this.collectorElm = document.getElementById("player");
+        // this.collectorElm.style.backgroundImage = url('../images/player1.png');
         this.updateUI();
-
     }
+
     updateUI() {
         this.collectorElm.style.width = this.width + "px";
         this.collectorElm.style.height = this.height + "px";
         this.collectorElm.style.left = this.positionX + "px";
         this.collectorElm.style.bottom = this.positionY + "px";
-        //this.collectorElm.style.backgroundImage = url('../images/player.png');
-        
+        // this.collectorElm.style.backgroundImage = url('../images/player1.png');
+
     }
 
     moveRight() {
@@ -33,15 +35,16 @@ class Player {
         }
         this.updateUI();
     }
+    
 }
 
 // create class for objects
 class GameObject {
     constructor(type) {
-        this.positionX = Math.floor(Math.random() * (1500 - 0) + 0);
+        this.width = 71;
+        this.height = 52;
+        this.positionX = Math.floor(Math.random() * (1300 - 0) + 0);
         this.positionY = 600;
-        this.width = 80;
-        this.height = 60;
         this.type = type;
 
         this.createDom();
@@ -49,19 +52,21 @@ class GameObject {
 
     createDom() {
 
-        //Create crystal Element
+        //Create game Element
         this.gameElm = document.createElement("div");
 
         // add content
-        this.gameElm.className = this.type;
-        this.gameElm.style.left = this.positionX + "px";
-        this.gameElm.style.bottom = this.positionY + "px";
         this.gameElm.style.width = this.width + "px";
         this.gameElm.style.height = this.height + "px";
+        this.gameElm.style.left = this.positionX + "px";
+        this.gameElm.style.bottom = this.positionY + "px";
+        this.gameElm.className = this.type;
+
+
         //this.gameElm.style.backgroundColor = this.type === "crystal" ? "gold" : "darkred";
-        
+
         // dynamic image changing based on type (make sure to name images accordingly)
-         this.gameElm.style.backgroundImage = `url(../images/${this.type}.png)` ;    //WHEN INCLUDE MORE TYPES
+        this.gameElm.style.backgroundImage = `url(../images/${this.type}.png)`;    //WHEN INCLUDE MORE TYPES
 
 
         //append to dom
@@ -84,6 +89,8 @@ class GameObject {
 
 const collector = new Player();
 const crystalsArr = [];
+const yellowstoneArr = [];
+const greenstoneArr = [];
 const stoneArr = [];
 
 
@@ -91,11 +98,19 @@ const stoneArr = [];
 let ObjectCreated = false;
 
 function createObject() {
-    const random = Math.round(Math.random() * 2);
+    const random = Math.round(Math.random() * 6);
     let newObj
     if (random % 2 === 0) {
-        newObj = new GameObject("crystal")
-        crystalsArr.push(newObj)
+        if (random === 2) {
+            newObj = new GameObject("crystal");
+            crystalsArr.push(newObj);
+        } else if (random === 4) {
+            newObj = new GameObject("Yellowstone");
+            yellowstoneArr.push(newObj);
+        } else if (random === 6) {
+            newObj = new GameObject("Greenstone");
+            greenstoneArr.push(newObj);
+        }
     } else {
         newObj = new GameObject("stone");
         stoneArr.push(newObj);
@@ -110,7 +125,7 @@ function createObject() {
 setInterval(createObject, 1000);
 
 //to display score
-let point = 0;
+let point;
 function updatePoint() {
     document.getElementById("point").innerText = "Score:" + point;
 }
@@ -142,6 +157,8 @@ function handleCollision(arr, objType, pointchange) {
 
 setInterval(() => {
     handleCollision(crystalsArr, "crystal", 1);
+    handleCollision(yellowstoneArr,"Yellowstone", 1);
+    handleCollision(greenstoneArr,"Greenstone", 1);
     handleCollision(stoneArr, "stone", -1);
 
 }, 10);
