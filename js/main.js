@@ -76,13 +76,7 @@ class GameObject {
 const collector = new Player();
 const crystalsArr = [];
 const stoneArr = [];
-let point = 0;
 
-
-// to display score
-function updatePoint() {
-    document.getElementById("point").innerText = "Score:" + point;
-}
 
 // to create crystals and stones
 function createObject() {
@@ -97,10 +91,17 @@ function createObject() {
 }
 
 
-setInterval(createObject, 2000);
+setInterval(createObject, 1000);
 
 
+let point =0;
+ //to display score
+ function updatePoint() {
+    document.getElementById("point").innerText = "Score:" + point;
+}
 
+
+// to detect collision
 function handleCollision(arr, objType, pointchange) {
     arr.forEach((gemObj, index) => {
 
@@ -115,10 +116,13 @@ function handleCollision(arr, objType, pointchange) {
             updatePoint();
             gemObj.removeGameObj();
             arr.splice(index, 1);
+        }else if (point < 0) {
+            console.log("game over...");
+            location.href = "gameover.html";
         }
+
     });
 }
-
 
 setInterval(() => {
     handleCollision(crystalsArr, "crystal", 1);
