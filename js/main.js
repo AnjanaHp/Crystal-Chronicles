@@ -178,7 +178,7 @@ document.addEventListener("keydown", (event) => {
 
 
 let timer;
-let timeRemaining = 10;
+let timeRemaining = 30;
 
 
 function updateTimeDisplay() {
