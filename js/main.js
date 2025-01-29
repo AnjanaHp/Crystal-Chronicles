@@ -117,6 +117,7 @@ function createObject() {
     if (!ObjectCreated) {
         ObjectCreated = true;
         startTimer();
+        startGame();
     }
 }
 
@@ -240,3 +241,8 @@ gameOverElm.style.backgroundColor="rgba(154, 205, 240, 0.33)";
 }
 }
 
+const backgroundMusic = document.getElementById("bg-music");
+
+function startGame(){
+    backgroundMusic.play();
+}
