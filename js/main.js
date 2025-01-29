@@ -11,6 +11,7 @@ class Player {
 
 
         this.collectorElm = document.getElementById("player");
+        this.collectorElm.style.backgroundImage = "url('./images/player1.png')";
 
         this.updateUI();
     }
@@ -64,7 +65,7 @@ class GameObject {
         this.gameElm.className = this.type;
 
         // dynamic image changing based on type 
-        this.gameElm.style.backgroundImage = `url(../images/${this.type}.png)`;
+        this.gameElm.style.backgroundImage = `url(./images/${this.type}.png)`;
 
         //append to dom
         const parentElm = document.getElementById("playarea");
