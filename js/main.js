@@ -11,7 +11,8 @@ class Player {
 
 
         this.collectorElm = document.getElementById("player");
-        this.collectorElm.style.backgroundImage = "url('./images/player1.png')";
+        this.collectorElm.style.backgroundImage = `url('./images/player1.png')`;
+
 
         this.updateUI();
     }
@@ -119,8 +120,7 @@ function createObject() {
     }
 }
 
-
-setInterval(createObject, 1000);
+let objTimer = setInterval(createObject, 1000);
 
 //to display score
 let point = 0;
@@ -152,17 +152,17 @@ function handleCollision(arr, objType, pointchange) {
     });
 }
 
-setInterval(() => {
+let moveTimer = setInterval(() => {
     handleCollision(crystalsArr, "crystal", 1);
     handleCollision(yellowstoneArr, "Yellowstone", 1);
     handleCollision(greenstoneArr, "Greenstone", 1);
     handleCollision(stoneArr, "stone", -1);
 
     if (point < 0) {
-        endGame();
+        endGame(0);
     }
 
-}, 10);
+}, 5);
 
 
 
@@ -197,36 +197,46 @@ function startTimer() {
         updateTimeDisplay();
         if (timeRemaining <= 0) {
             clearInterval(timer);
-            endGame();
+            endGame(1);
         }
     }, 1000);
 }
+// to handle endgame call out
+let gameEnded = false;
+function endGame(timeOut) {
+        // Stop any remaining timers or intervals
+        timeRemaining = 0;
+        updateTimeDisplay();
+        clearInterval(objTimer);
+if(!gameEnded)
+{
+    console.log("Game Over...");
 
-function endGame() {
-    console.log("you scored" + point);
-    displayScore();
 
-    setTimeout(() => {
 
-        location.href = "gameover.html";
-
-    }, 500);
-
-}
-
-function displayScore() {
-    const gameoverElm = document.getElementById("gameover");
-    if (gameoverElm) {
-        if (point !== 0) {
-            console.log(point);
-            gameoverElm.innerText = "Your score: " + point;
-        } else {
-            gameoverElm.innerText = "Better Luck Next Time!";
-        }
+    // Create the game over message
+    const gameOverElm = document.getElementById("gameover");
+    if(timeOut)
+    {
+        gameOverElm.innerHTML = `
+        <h3>Game Over</h3>
+        <p>Your final score: <strong>${point}</strong></p>
+        <p><a href="./index.html">Click here to try again</a></p>
+    `;
     }
+    else{
+        gameOverElm.innerHTML = `
+        <h3>Game Over</h3>
+        <p><a href="./index.html">Click here to try again</a></p>
+    `;
+    }
+    
+gameOverElm.style.backgroundColor="rgba(154, 205, 240, 0.33)";
+
+
+    // Append game over screen to the play area
+    document.getElementById("playarea").appendChild(gameOverElm);
+    gameEnded=true;
 }
-
-
-startTimer();
-
+}
 
