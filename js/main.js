@@ -1,6 +1,7 @@
 
 const playAreaWidth = document.getElementById("playarea").offsetWidth;
 
+// create class for player
 class Player {
     constructor() {
         this.width = 120;
@@ -10,7 +11,7 @@ class Player {
 
 
         this.collectorElm = document.getElementById("player");
-        // this.collectorElm.style.backgroundImage = url('../images/player1.png');
+
         this.updateUI();
     }
 
@@ -19,12 +20,12 @@ class Player {
         this.collectorElm.style.height = this.height + "px";
         this.collectorElm.style.left = this.positionX + "px";
         this.collectorElm.style.bottom = this.positionY + "px";
-        // this.collectorElm.style.backgroundImage = url('../images/player1.png');
+
 
     }
 
     moveRight() {
-        if (this.positionX < playAreaWidth) {
+        if (this.positionX + this.width < playAreaWidth) {
             this.positionX += 20;
         }
         this.updateUI();
@@ -35,7 +36,7 @@ class Player {
         }
         this.updateUI();
     }
-    
+
 }
 
 // create class for objects
@@ -62,12 +63,8 @@ class GameObject {
         this.gameElm.style.bottom = this.positionY + "px";
         this.gameElm.className = this.type;
 
-
-        //this.gameElm.style.backgroundColor = this.type === "crystal" ? "gold" : "darkred";
-
-        // dynamic image changing based on type (make sure to name images accordingly)
-        this.gameElm.style.backgroundImage = `url(../images/${this.type}.png)`;    //WHEN INCLUDE MORE TYPES
-
+        // dynamic image changing based on type 
+        this.gameElm.style.backgroundImage = `url(../images/${this.type}.png)`;
 
         //append to dom
         const parentElm = document.getElementById("playarea");
@@ -125,7 +122,7 @@ function createObject() {
 setInterval(createObject, 1000);
 
 //to display score
-let point;
+let point = 0;
 function updatePoint() {
     document.getElementById("point").innerText = "Score:" + point;
 }
@@ -136,6 +133,7 @@ function handleCollision(arr, objType, pointchange) {
     arr.forEach((gemObj, index) => {
 
         gemObj.moveDown();
+
         if (
             collector.positionX < gemObj.positionX + gemObj.width &&
             collector.positionX + collector.width > gemObj.positionX &&
@@ -144,12 +142,10 @@ function handleCollision(arr, objType, pointchange) {
         ) {
             point += pointchange;
             updatePoint();
+
             gemObj.removeGameObj();
             arr.splice(index, 1);
             return;
-        } else if (point < 0) {
-            console.log("game over...");
-            location.href = "gameover.html";
         }
 
     });
@@ -157,9 +153,13 @@ function handleCollision(arr, objType, pointchange) {
 
 setInterval(() => {
     handleCollision(crystalsArr, "crystal", 1);
-    handleCollision(yellowstoneArr,"Yellowstone", 1);
-    handleCollision(greenstoneArr,"Greenstone", 1);
+    handleCollision(yellowstoneArr, "Yellowstone", 1);
+    handleCollision(greenstoneArr, "Greenstone", 1);
     handleCollision(stoneArr, "stone", -1);
+
+    if (point < 0) {
+        endGame();
+    }
 
 }, 10);
 
@@ -178,18 +178,17 @@ document.addEventListener("keydown", (event) => {
 
 
 let timer;
-let timeRemaining = 60;
+let timeRemaining = 10;
 
 
 function updateTimeDisplay() {
-    console.log("updating timer")
-    //const time = Math.floor(timeRemaining / 60).toString().padStart(2, "0");
+
     document.getElementById("time").innerText = "Time:" + timeRemaining + 's';
 
 }
 
 function startTimer() {
-    console.log("time started")
+
     clearInterval(timer);
     updateTimeDisplay();
     timer = setInterval(function () {
@@ -203,9 +202,27 @@ function startTimer() {
 }
 
 function endGame() {
-    console.log("game over...");
-    location.href = "gameover.html";
+    console.log("you scored" + point);
+    displayScore();
 
+    setTimeout(() => {
+
+        location.href = "gameover.html";
+
+    }, 500);
+
+}
+
+function displayScore() {
+    const gameoverElm = document.getElementById("gameover");
+    if (gameoverElm) {
+        if (point !== 0) {
+            console.log(point);
+            gameoverElm.innerText = "Your score: " + point;
+        } else {
+            gameoverElm.innerText = "Better Luck Next Time!";
+        }
+    }
 }
 
 

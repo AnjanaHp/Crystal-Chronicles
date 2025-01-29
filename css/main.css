@@ -42,11 +42,10 @@ body {
     
 }
 
-
-
 #gameover{
     text-align: center;
-    background-color: darkslategrey;
+    font-size: 24px;
+    background-color:cyan;
 }
 
 #time{
