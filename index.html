@@ -9,7 +9,7 @@
 </head>
 
 <body>
-         <div id="start">
+    <div id="start">
         <audio id="bg-music" src="./audio/background_audio.mp3" preload="auto"> </audio>
         <h1> Crystal Chronicles</h1>
 
@@ -22,17 +22,37 @@
             <p> Collect crystals by using the left and right arrow keys. </p>
             <img src="./images/arrowKeys.png" alt="arrowKeys">
             <p> Dodge the falling stones to prevent losing points.</p>
-            
+            <p> <img src="./images/crystal.png" alt="crystal"> +2 points
+                <img src="./images/Greenstone.png" alt="greenstone"><img src="./images/Yellowstone.png"
+                    alt="yellowstone"> +1 point
+                <img src="./images/stone.png" alt="stone"> -1 point
+            </p>
         </div>
+        <span id="audio-control"> 
+         <img id="audio" src="./images/mute.png " width="60" height="60" alt="speaker">  </span>
     </div>
+   
 
 </body>
+
 <script>
-  
-window.addEventListener("click", function () {
-const audioElm = document.getElementById("bg-music").play();
-audioElm.volume = 0.2;
-});
+     
+     document.getElementById("audio-control").addEventListener("click", function (){
+    const unmute = document.getElementById("audio");
+    const audioElm = document.getElementById("bg-music");
+    
+    if(unmute.src.includes("unmute.png"))
+    {
+        audioElm.volume = 0;
+        unmute.src = "./images/mute.png";
+    }
+    else{
+        audioElm.volume = 0.2;
+        audioElm.play();
+        unmute.src = "./images/unmute.png";
+    }
+    
+     });
 
 </script>
 

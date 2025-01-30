@@ -3,7 +3,6 @@ body {
     padding: 0;
     place-items: center;
     background-color: rgb(235, 132, 64);
-
 }
 
 #playarea {
@@ -20,51 +19,60 @@ body {
     overflow: hidden;
 }
 
+#audio-control {
+    position: relative;
+    top: 30px;
+    left: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#audio-control img {
+    cursor: pointer;
+}
+
 #player {
-
-
     object-fit: fill;
     position: absolute;
-
 }
+
 @keyframes wave {
-    0%, 100% {
-      text-shadow: 0 0 5px #e92ac0;
+
+    0%,
+    100% {
+        text-shadow: 0 0 5px #e92ac0;
     }
+
     50% {
-      text-shadow: 0 5px 10px blue;
+        text-shadow: 0 5px 10px blue;
     }
-  }
-  h1  {
-    font-size: 40px;
-    font-weight: bold;
-    background-color: none;
-    animation: wave 2s infinite ease-in-out;
-  }
+}
+
 h1 {
     font-size: 45px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    text-shadow: 2px 2px black;
-    color: rgb(228, 208, 34);
+    font-weight: bold;
+    font-family:'Times New Roman', Times, serif;
+    background-color: none;
+    animation: wave 2s infinite ease-in-out;
+    color: rgb(228, 34, 108);
 }
 
-#point {
 
-    position: absolute;
-    font-size: 24px;
+#point {
+    position:absolute;
+   text-align: left;
+    font-size: 26px;
     font-weight: bold;
-    top: 100px;
-    left: 10px;
-    color:indigo;
+    color: rgb(113, 10, 231);
+    padding: 5px;
 }
 
 .crystal,
 .stone,
 .Yellowstone,
 .Greenstone {
-
     position: absolute;
-
 }
 
 #gameover {
@@ -78,14 +86,12 @@ h1 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
 }
 
 #time {
     text-align: right;
-    font-size: 24px;
-    top: 25px;
+    font-size: 26px;
+    padding: 5px;
     font-weight: bold;
-    color:indigo;
-    ;
+    color: rgb(113, 10, 231);
 }

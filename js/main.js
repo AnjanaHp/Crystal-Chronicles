@@ -19,7 +19,6 @@ class Player {
         this.collectorElm.style.height = this.height + "px";
         this.collectorElm.style.left = this.positionX + "px";
         this.collectorElm.style.bottom = this.positionY + "px";
-
     }
 
     moveRight() {
@@ -51,7 +50,7 @@ class GameObject {
 
     createDom() {
 
-        //Create game Element
+        //create game Element
         this.gameElm = document.createElement("div");
 
         // add content
@@ -111,19 +110,22 @@ function createObject() {
     if (!ObjectCreated) {
         ObjectCreated = true;
         startTimer();
+        updatePoint();
     }
 }
 
-let objTimer = setInterval(createObject, 1000);
+let objTimer = setInterval(createObject, 900);
 
 //to display score
 let point = 0;
+
 function updatePoint() {
     document.getElementById("point").innerText = "Score:" + point;
-
 }
 
-const pointsound = document.getElementById("pointgained");
+const pointgain = document.getElementById("pointgained");
+const pointlost = document.getElementById("pointlost");
+
 // to detect collision
 function handleCollision(arr, objType, pointchange) {
     arr.forEach((gemObj, index) => {
@@ -137,10 +139,13 @@ function handleCollision(arr, objType, pointchange) {
             collector.positionY + collector.height > gemObj.positionY
         ) {
             if (gameEnded === false) {
-           
-               if ((pointchange === 2) || (pointchange === 1)) {
-                    pointsound.play();
-                    pointsound.volume = 0.5;
+
+                if ((pointchange === 2) || (pointchange === 1)) {
+                    pointgain.play();
+                    pointgain.volume = 0.6;
+                } else if (pointchange === -1) {
+                    pointlost.play();
+                    pointlost.volume = 0.5;
                 }
                 point += pointchange;
                 updatePoint();
@@ -149,11 +154,10 @@ function handleCollision(arr, objType, pointchange) {
             arr.splice(index, 1);
             return;
         }
-
     });
 }
 
-let moveTimer = setInterval(() => {
+setInterval(() => {
     handleCollision(crystalsArr, "crystal", 2);
     handleCollision(yellowstoneArr, "Yellowstone", 1);
     handleCollision(greenstoneArr, "Greenstone", 1);
@@ -162,7 +166,6 @@ let moveTimer = setInterval(() => {
     if (point < 0) {
         endGame(0);
     }
-
 }, 8);
 
 document.addEventListener("keydown", (event) => {
@@ -171,12 +174,12 @@ document.addEventListener("keydown", (event) => {
     } else if (event.code === 'ArrowRight') {
         collector.moveRight();
     }
-
 });
 
-
 let timer;
-let timeRemaining = 30;
+let timeRemaining = 60;
+
+// timer function
 
 function updateTimeDisplay() {
     document.getElementById("time").innerText = "Time:" + timeRemaining + 's';
@@ -186,9 +189,11 @@ function startTimer() {
 
     clearInterval(timer);
     updateTimeDisplay();
+
     timer = setInterval(function () {
         timeRemaining--;
         updateTimeDisplay();
+
         if (timeRemaining <= 0) {
             clearInterval(timer);
             endGame(1);
@@ -200,14 +205,17 @@ function startTimer() {
 let gameEnded = false;
 
 function endGame(timeOut) {
-    // Stop any remaining timers or intervals
-    timeRemaining = 0;
-    updateTimeDisplay();
+    
+    // to stop any remaining timers 
+    
     clearInterval(objTimer);
 
     if (!gameEnded) {
+        document.getElementById("point").remove();
+        document.getElementById("time").remove();
+        document.getElementById("player").remove();
 
-        // Create the game over message
+        // create the game over message
         const gameOverElm = document.getElementById("gameover");
         if (timeOut) {
 
@@ -225,7 +233,7 @@ function endGame(timeOut) {
     `;
         }
         gameOverElm.style.backgroundColor = "rgba(154, 205, 240, 0.33)";
-        // Append game over screen to the play area
+        // append game over screen to the play area
         document.getElementById("playarea").appendChild(gameOverElm);
         gameEnded = true;
     }

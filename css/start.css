@@ -1,7 +1,6 @@
-body{
-  background-color:rgb(186, 162, 189);
+body {
+  background-color: rgb(186, 162, 189);
   place-items: center;
-   
 }
 
 #start {
@@ -10,11 +9,10 @@ body{
   height: 700px;
   background-image: url(../images/startpage_img.png);
   object-fit: contain;
-  text-align: center;
   overflow: hidden;
   border: 2px, solid black;
   border-radius: 10px;
-  display:flexbox;
+  display: flexbox;
   justify-content: center;
 }
 
@@ -25,16 +23,14 @@ h1 {
   font-size: 80px;
   color: white;
   text-shadow: 10px 10px black;
-
 }
 
 a {
-
-  text-decoration:none;
+  text-decoration: none;
   text-shadow: 2px 2px rgb(139, 106, 106);
   border: 2px solid rgb(138, 6, 138);
   border-radius: 10px;
-  padding:0px;
+  padding: 0px;
 }
 
 h4 {
@@ -44,9 +40,12 @@ h4 {
 
 
 @keyframes wave {
-  0%, 100% {
+
+  0%,
+  100% {
     text-shadow: 0 0 5px #dac02f;
   }
+
   50% {
     text-shadow: 0 5px 10px #00ff95;
   }
@@ -59,22 +58,32 @@ a {
   animation: wave 2s infinite ease-in-out;
 }
 
-
 #rule {
 
   text-align: center;
   font-size: 26px;
   color: aliceblue;
-  text-shadow: 
-    -1px -1px 0 black,  
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black;
- 
+  text-shadow:
+    -1px -1px 0 black,
+    1px -1px 0 black,
+    -1px 1px 0 black,
+    1px 1px 0 black;
 }
 
 #content {
   text-align: center;
   font-size: 30px;
   top: 500px;
+}
+#audio-control{
+position:relative;
+bottom: 40px;
+left:50px;
+display:flex;
+flex-direction: column;
+gap:10px;
+}
+
+#audio-control img{
+  cursor: pointer;
 }

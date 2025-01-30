@@ -9,31 +9,41 @@
 </head>
 
 <body>
-
     <div id="playarea">
-        <audio id="bg-music" src="./audio/background_audio.mp3" preload="auto"> </audio>
+        <audio id="bg-music" src="./audio/background_audio.mp3" preload="auto" loop> </audio>
         <div id="player"> </div>
-        <h1> Crystal Chronicles </h1>
-
+       <span id="audio-control"> 
+            <img id="audio" src="./images/mute.png " width="60" height="60" alt="speaker">  </span>
+        <h1> Crystal Chronicles </h1> 
         <div id="point">
             <h4> Score:</h4>
             <audio id="pointgained" src="./audio/point.wav" preload="auto"></audio>
+            <audio id="pointlost" src="./audio/stone.wav" preload ="auto"></audio>
         </div>
         <div id="time">Time: </div>
-        <div id="gameover">
-
-        </div>
+     
+        <div id="gameover"> </div>
     </div>
-
 </body>
 <script>
-
-    window.addEventListener("load", function () {
-const audioElm = document.getElementById("bg-music").play();
-audioElm.volume = 0.2;
-});
+     
+    document.getElementById("audio-control").addEventListener("click", function (){
+   const unmute = document.getElementById("audio");
+   const audioElm = document.getElementById("bg-music");
+   
+   if(unmute.src.includes("unmute.png"))
+   {
+       audioElm.volume = 0;
+       unmute.src = "./images/mute.png";
+   }
+   else{
+       audioElm.volume = 0.2;
+       audioElm.play();
+       unmute.src = "./images/unmute.png";
+   }
+   
+    });
 
 </script>
 <script src="./js/main.js"></script>
-
 </html>
