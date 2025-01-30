@@ -224,9 +224,7 @@ function endGame(timeOut) {
         <p><a href="./index.html">Click here to try again</a></p>
     `;
         }
-
         gameOverElm.style.backgroundColor = "rgba(154, 205, 240, 0.33)";
-
         // Append game over screen to the play area
         document.getElementById("playarea").appendChild(gameOverElm);
         gameEnded = true;
