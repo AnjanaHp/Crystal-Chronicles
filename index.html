@@ -9,17 +9,36 @@
 </head>
 
 <body>
+    <audio id="bg-music" src="./audio/background_audio.mp3" autoplay loop> </audio>
     <div id="start">
+
+
         <h1> Crystal Chronicles</h1>
         <div id="content">
+
+
             <a href="./gamepage.html"> START GAME </a>
+            <audio id="clicksound" src="./audio/click.mp3"> </audio>
+
             <h4> OBJECTIVE</h4>
+            
         </div>
         <div id="rule">
             <p> Collect crystals by using the left and right arrow keys. </p>
             <img src="./images/arrowKeys.png" alt="arrowKeys">
             <p> Dodge the falling stones to prevent losing points.</p>
+
+
         </div>
     </div>
 </body>
+<script>
+
+    window.addEventListener("load", function () {
+        const elm = document.getElementById("bg-music").play();
+        elm.volume=0.2;
+    });
+ 
+</script>
+
 </html>

@@ -1,4 +1,3 @@
-
 const playAreaWidth = document.getElementById("playarea").offsetWidth;
 
 // create class for player
@@ -9,10 +8,8 @@ class Player {
         this.positionX = 100;
         this.positionY = 10;
 
-
         this.collectorElm = document.getElementById("player");
         this.collectorElm.style.backgroundImage = `url('./images/player1.png')`;
-
 
         this.updateUI();
     }
@@ -23,7 +20,6 @@ class Player {
         this.collectorElm.style.left = this.positionX + "px";
         this.collectorElm.style.bottom = this.positionY + "px";
 
-
     }
 
     moveRight() {
@@ -32,13 +28,13 @@ class Player {
         }
         this.updateUI();
     }
+
     moveLeft() {
         if (this.positionX > 0) {
             this.positionX -= 20;
         }
         this.updateUI();
     }
-
 }
 
 // create class for objects
@@ -46,7 +42,7 @@ class GameObject {
     constructor(type) {
         this.width = 71;
         this.height = 52;
-        this.positionX = Math.floor(Math.random() * (1300 - 0) + 0);
+        this.positionX = Math.floor(Math.random() * (1200 - 0) + 0);
         this.positionY = 600;
         this.type = type;
 
@@ -85,13 +81,11 @@ class GameObject {
     }
 }
 
-
 const collector = new Player();
 const crystalsArr = [];
 const yellowstoneArr = [];
 const greenstoneArr = [];
 const stoneArr = [];
-
 
 // to create crystals and stones
 let ObjectCreated = false;
@@ -117,7 +111,6 @@ function createObject() {
     if (!ObjectCreated) {
         ObjectCreated = true;
         startTimer();
-        startGame();
     }
 }
 
@@ -127,9 +120,10 @@ let objTimer = setInterval(createObject, 1000);
 let point = 0;
 function updatePoint() {
     document.getElementById("point").innerText = "Score:" + point;
+
 }
 
-
+const pointsound = document.getElementById("pointgained");
 // to detect collision
 function handleCollision(arr, objType, pointchange) {
     arr.forEach((gemObj, index) => {
@@ -142,9 +136,15 @@ function handleCollision(arr, objType, pointchange) {
             collector.positionY < gemObj.positionY + gemObj.height &&
             collector.positionY + collector.height > gemObj.positionY
         ) {
-            point += pointchange;
-            updatePoint();
-
+            if (gameEnded === false) {
+           
+               if ((pointchange === 2) || (pointchange === 1)) {
+                    pointsound.play();
+                    pointsound.volume = 0.5;
+                }
+                point += pointchange;
+                updatePoint();
+            }
             gemObj.removeGameObj();
             arr.splice(index, 1);
             return;
@@ -154,7 +154,7 @@ function handleCollision(arr, objType, pointchange) {
 }
 
 let moveTimer = setInterval(() => {
-    handleCollision(crystalsArr, "crystal", 1);
+    handleCollision(crystalsArr, "crystal", 2);
     handleCollision(yellowstoneArr, "Yellowstone", 1);
     handleCollision(greenstoneArr, "Greenstone", 1);
     handleCollision(stoneArr, "stone", -1);
@@ -163,10 +163,7 @@ let moveTimer = setInterval(() => {
         endGame(0);
     }
 
-}, 5);
-
-
-
+}, 8);
 
 document.addEventListener("keydown", (event) => {
     if (event.code === 'ArrowLeft') {
@@ -174,19 +171,15 @@ document.addEventListener("keydown", (event) => {
     } else if (event.code === 'ArrowRight') {
         collector.moveRight();
     }
-    console.log("player moved")
-});
 
+});
 
 
 let timer;
 let timeRemaining = 30;
 
-
 function updateTimeDisplay() {
-
     document.getElementById("time").innerText = "Time:" + timeRemaining + 's';
-
 }
 
 function startTimer() {
@@ -202,47 +195,44 @@ function startTimer() {
         }
     }, 1000);
 }
+
 // to handle endgame call out
 let gameEnded = false;
+
 function endGame(timeOut) {
-        // Stop any remaining timers or intervals
-        timeRemaining = 0;
-        updateTimeDisplay();
-        clearInterval(objTimer);
-if(!gameEnded)
-{
-    console.log("Game Over...");
+    // Stop any remaining timers or intervals
+    timeRemaining = 0;
+    updateTimeDisplay();
+    clearInterval(objTimer);
 
+    if (!gameEnded) {
 
+        // Create the game over message
+        const gameOverElm = document.getElementById("gameover");
+        if (timeOut) {
 
-    // Create the game over message
-    const gameOverElm = document.getElementById("gameover");
-    if(timeOut)
-    {
-        gameOverElm.innerHTML = `
-        <h3>Game Over</h3>
+            gameOverElm.innerHTML = `
+        <h3>Time Up! <br>
+        Game Over </h3>
         <p>Your final score: <strong>${point}</strong></p>
         <p><a href="./index.html">Click here to try again</a></p>
     `;
-    }
-    else{
-        gameOverElm.innerHTML = `
+        }
+        else {
+            gameOverElm.innerHTML = `
         <h3>Game Over</h3>
         <p><a href="./index.html">Click here to try again</a></p>
     `;
+        }
+
+        gameOverElm.style.backgroundColor = "rgba(154, 205, 240, 0.33)";
+
+        // Append game over screen to the play area
+        document.getElementById("playarea").appendChild(gameOverElm);
+        gameEnded = true;
     }
-    
-gameOverElm.style.backgroundColor="rgba(154, 205, 240, 0.33)";
-
-
-    // Append game over screen to the play area
-    document.getElementById("playarea").appendChild(gameOverElm);
-    gameEnded=true;
-}
 }
 
-const backgroundMusic = document.getElementById("bg-music");
 
-function startGame(){
-    backgroundMusic.play();
-}
+
+

@@ -1,6 +1,9 @@
 body{
   background-color:rgb(186, 162, 189);
+  place-items: center;
+   
 }
+
 #start {
   position: relative;
   width: 1300px;
@@ -8,11 +11,11 @@ body{
   background-image: url(../images/startpage_img.png);
   object-fit: contain;
   text-align: center;
-  position: relative;
   overflow: hidden;
   border: 2px, solid black;
   border-radius: 10px;
-  left:20px;
+  display:flexbox;
+  justify-content: center;
 }
 
 
@@ -26,17 +29,36 @@ h1 {
 }
 
 a {
-  color: greenyellow;
-  text-decoration: wavy;
-  text-shadow: 2px 2px black;
-  border: 2px solid thistle;
+
+  text-decoration:none;
+  text-shadow: 2px 2px rgb(139, 106, 106);
+  border: 2px solid rgb(138, 6, 138);
   border-radius: 10px;
+  padding:0px;
 }
 
 h4 {
   color: beige;
   text-shadow: 4px 4px black;
 }
+
+
+@keyframes wave {
+  0%, 100% {
+    text-shadow: 0 0 5px #dac02f;
+  }
+  50% {
+    text-shadow: 0 5px 10px #00ff95;
+  }
+}
+
+a {
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+  animation: wave 2s infinite ease-in-out;
+}
+
 
 #rule {
 

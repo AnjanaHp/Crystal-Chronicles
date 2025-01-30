@@ -2,14 +2,16 @@ body {
     margin: 0;
     padding: 0;
     place-items: center;
-    background-color: rgb(255, 136, 0);
+    background-color: rgb(235, 132, 64);
 
 }
 
 #playarea {
+    display: flexbox;
+    justify-content: center;
     width: 1300px;
     height: 700px;
-    background-image: url(../images/background_img1.png);
+    background-image: url(../images/background_img.png);
     object-fit: contain;
     text-align: center;
     position: relative;
@@ -25,12 +27,25 @@ body {
     position: absolute;
 
 }
-
+@keyframes wave {
+    0%, 100% {
+      text-shadow: 0 0 5px #e92ac0;
+    }
+    50% {
+      text-shadow: 0 5px 10px blue;
+    }
+  }
+  h1  {
+    font-size: 40px;
+    font-weight: bold;
+    background-color: none;
+    animation: wave 2s infinite ease-in-out;
+  }
 h1 {
     font-size: 45px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     text-shadow: 2px 2px black;
-    color: rgb(230, 182, 24);
+    color: rgb(228, 208, 34);
 }
 
 #point {
@@ -38,9 +53,9 @@ h1 {
     position: absolute;
     font-size: 24px;
     font-weight: bold;
-    top: 50px;
+    top: 100px;
     left: 10px;
-    color: lavenderblush;
+    color:indigo;
 }
 
 .crystal,
@@ -54,7 +69,7 @@ h1 {
 
 #gameover {
     position: absolute;
-    color: rgb(136, 4, 125);
+    color: rgb(1, 129, 29);
     font-size: 24px;
     width: 300px;
     height: 300px;
@@ -69,7 +84,8 @@ h1 {
 #time {
     text-align: right;
     font-size: 24px;
-    top: 40px;
+    top: 25px;
     font-weight: bold;
-    color: rgb(207, 218, 219);
+    color:indigo;
+    ;
 }

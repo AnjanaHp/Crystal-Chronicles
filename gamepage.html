@@ -11,12 +11,13 @@
 <body>
 
     <div id="playarea">
-        <audio id="bg-music" src="./audio/background_audio.mp3"> </audio>
+        <audio id="bg-music" src="./audio/background_audio.mp3" preload="auto"> </audio>
         <div id="player"> </div>
         <h1> Crystal Chronicles </h1>
 
         <div id="point">
             <h4> Score:</h4>
+            <audio id="pointgained" src="./audio/point.wav" preload="auto"></audio>
         </div>
         <div id="time">Time: </div>
         <div id="gameover">
@@ -24,8 +25,13 @@
         </div>
     </div>
 
-
 </body>
+<script>
+    window.addEventListener("load", function () {
+const audioElm = document.getElementById("bg-music").play();
+audioElm.volume=0.1;
+});
+</script>
 <script src="./js/main.js"></script>
 
 </html>
