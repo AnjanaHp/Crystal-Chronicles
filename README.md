@@ -12,7 +12,7 @@ A simple game built using HTML, CSS and JAVASCRIPT. The game includes interactiv
 Use arrow keys to move left and right. Collect as many crystals as you can before time runs out to earn you points, while stones deduct your points. If your score reaches 0, you still have a chance. However, if it drops below 0, the game is over.
 
 You can play the game by clicking this link:
-(https://anjanahp.github.io/Crystal-Chronicals/)
+(https://anjanahp.github.io/Crystal-Chronicles/)
 
 ## Future Improvements 
 Add further levels    
